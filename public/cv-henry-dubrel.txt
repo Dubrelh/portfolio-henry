@@ -1,0 +1,39 @@
+FOTSO KEMENI DUBREL HENRY
+Développeur logiciel
+
+Contact
+- Téléphone : +237 675046420
+- Email : henrykemeni2@gmail.com
+- Localisation : Shell village, Douala
+
+Profil
+Étudiant passionné par l’ingénierie logicielle et le développement d’applications web et mobiles modernes. Je travaille avec React, Next.js, Node.js et React Native et j’aime concevoir des produits simples, efficaces et bien structurés.
+
+Expérience
+Développeur Frontend & Backend – Fotetsa (2026 - Aujourd’hui)
+- Mise en place du nouveau parcours de première connexion utilisateur : activation de la MFA.
+- Mise en place de l’interface UI de configuration du domaine du système Hullbay.
+- Mise en place de l’auto-complétion pour les secrets configurés et les registres du système.
+- Implémentation de Railpack au sein du système Hullbay.
+- Intervention générale sur l’UI du système Hullbay.
+
+Éducation
+- Institut Universitaire de la Côte – BTS en génie logiciel (2024 - 2026)
+- Lycée Bilingue Bobongo Petit Paris – Baccalauréat (C) (2023 - 2024)
+
+Compétences
+- Développement web
+- Développement mobile
+- Gestion de projet
+- Modélisation SI
+- React.js / Next.js
+- Node.js / Express.js / NestJS
+- React Native + Expo
+- Railway
+- Git / GitHub
+- Supabase / PostgreSQL
+- Notion / Zoho Project
+
+Langues
+- Français
+- Anglais (intermédiaire)
