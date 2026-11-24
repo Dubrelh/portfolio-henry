@@ -1,94 +1,123 @@
 import { useState, useEffect } from 'react';
-import { SunIcon, MoonIcon, MenuIcon, XIcon } from 'lucide-react';
+import { HomeIcon, UserIcon, BriefcaseIcon, FolderIcon, WrenchIcon, MailIcon } from 'lucide-react';
 
 const navLinks = [
-  { href: '#about', label: 'À propos' },
+  { href: '#about',      label: 'À propos' },
   { href: '#experience', label: 'Expérience' },
-  { href: '#projects', label: 'Projets' },
-  { href: '#skills', label: 'Compétences' },
-  { href: '#contact', label: 'Contact' },
+  { href: '#projects',   label: 'Projets' },
+  { href: '#skills',     label: 'Compétences' },
+  { href: '#contact',    label: 'Contact' },
 ];
 
-export default function Navbar({ displayName, theme, setTheme }) {
+const mobileLinks = [
+  { href: '#home',       label: 'Accueil',    Icon: HomeIcon },
+  { href: '#about',      label: 'Profil',     Icon: UserIcon },
+  { href: '#experience', label: 'Expérience', Icon: BriefcaseIcon },
+  { href: '#projects',   label: 'Projets',    Icon: FolderIcon },
+  { href: '#skills',     label: 'Skills',     Icon: WrenchIcon },
+  { href: '#contact',    label: 'Contact',    Icon: MailIcon },
+];
+
+export default function Navbar({ displayName }) {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [active, setActive] = useState('#home');
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-white/85 dark:bg-[#0a0a0a]/85 backdrop-blur-md border-b border-neutral-200/80 dark:border-white/5 shadow-sm'
-          : 'bg-transparent'
-      }`}
-    >
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-        {/* Logo */}
-        <a
-          href="#home"
-          className="text-lg font-bold tracking-tight text-neutral-900 dark:text-white hover:text-brand-500 transition-colors"
-        >
-          {displayName}
-          <span className="text-brand-500">.</span>
-        </a>
+  // Détection automatique de la section visible
+  useEffect(() => {
+    const sectionIds = ['home', 'about', 'experience', 'projects', 'skills', 'contact'];
+    const handleScrollActive = () => {
+      const scrollPos = window.scrollY + 160;
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (el && el.offsetTop <= scrollPos) {
+          setActive(`#${sectionIds[i]}`);
+          break;
+        }
+      }
+    };
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-1">
-          {navLinks.map(({ href, label }) => (
+    window.addEventListener('scroll', handleScrollActive);
+    handleScrollActive();
+    return () => window.removeEventListener('scroll', handleScrollActive);
+  }, []);
+
+  return (
+    <>
+      {/* ── DESKTOP : Navbar flottante centrée en haut ── */}
+      <header className="hidden md:flex fixed top-4 inset-x-0 z-50 justify-center pointer-events-none px-4">
+        <div
+          className={`pointer-events-auto flex items-center gap-1.5 px-3 py-2 rounded-full border transition-all duration-300 ${
+            scrolled
+              ? 'bg-white/90 backdrop-blur-md border-slate-200/90 shadow-[0_6px_20px_rgba(15,23,42,0.06)]'
+              : 'bg-white/80 backdrop-blur-sm border-slate-200/70 shadow-[0_2px_10px_rgba(15,23,42,0.04)]'
+          }`}
+        >
+          {/* Logo / Nom en police Syne */}
+          <a
+            href="#home"
+            className="px-3 py-1 text-sm font-extrabold text-slate-900 hover:text-[#A67C48] transition-colors tracking-tight"
+            style={{ fontFamily: 'Syne, sans-serif' }}
+          >
+            {displayName}
+            <span style={{ color: '#DEB887' }}>.</span>
+          </a>
+
+          <div className="w-px h-4 bg-slate-200 mx-1" />
+
+          {/* Navigation Links */}
+          <nav className="flex items-center gap-0.5">
+            {navLinks.map(({ href, label }) => {
+              const isCurrent = active === href;
+              return (
+                <a
+                  key={href}
+                  href={href}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all duration-200 ${
+                    isCurrent
+                      ? 'bg-[#FAF6F0] text-[#7E5B31] border border-[#E8D5B7]/60 shadow-xs'
+                      : 'text-slate-600 hover:text-[#7E5B31] hover:bg-[#FAF6F0]/60'
+                  }`}
+                >
+                  {label}
+                </a>
+              );
+            })}
+          </nav>
+        </div>
+      </header>
+
+      {/* ── MOBILE : Dock flottant en bas d'écran avec icônes ── */}
+      <nav
+        className="md:hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 px-2.5 py-2 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-[0_8px_24px_rgba(15,23,42,0.12)] max-w-[92vw]"
+      >
+        {mobileLinks.map(({ href, label, Icon }) => {
+          const isCurrent = active === href;
+          return (
             <a
               key={href}
               href={href}
-              className="px-4 py-2 rounded-full text-sm font-medium text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-white/5 transition-all duration-200"
+              aria-label={label}
+              title={label}
+              className={`flex flex-col items-center justify-center w-11 h-11 rounded-full transition-all duration-200 ${
+                isCurrent
+                  ? 'bg-[#FAF6F0] text-[#7E5B31] border border-[#E8D5B7]/80 scale-105 shadow-xs'
+                  : 'text-slate-500 hover:text-slate-900 active:scale-95'
+              }`}
             >
-              {label}
-            </a>
-          ))}
-        </nav>
-
-        {/* Right controls */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))}
-            className="p-2.5 rounded-full text-neutral-600 dark:text-neutral-300 hover:text-brand-500 hover:bg-neutral-100 dark:hover:bg-white/5 transition-all"
-            aria-label="Changer le thème"
-            title={theme === 'dark' ? 'Passer en mode clair' : 'Passer en mode sombre'}
-          >
-            {theme === 'dark' ? <SunIcon size={18} /> : <MoonIcon size={18} />}
-          </button>
-
-          {/* Mobile hamburger */}
-          <button
-            className="md:hidden p-2 rounded-lg text-neutral-600 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-white/5 transition-all"
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-label="Menu"
-          >
-            {menuOpen ? <XIcon size={20} /> : <MenuIcon size={20} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-white/95 dark:bg-[#111111]/95 backdrop-blur-md border-b border-neutral-200 dark:border-white/10 shadow-lg">
-          <nav className="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-1">
-            {navLinks.map(({ href, label }) => (
-              <a
-                key={href}
-                href={href}
-                onClick={() => setMenuOpen(false)}
-                className="px-4 py-3 rounded-xl text-sm font-medium text-neutral-700 dark:text-neutral-200 hover:text-brand-500 hover:bg-neutral-100 dark:hover:bg-white/5 transition-all"
-              >
+              <Icon size={18} strokeWidth={isCurrent ? 2.3 : 1.9} />
+              <span className="text-[9px] font-medium leading-none mt-0.5 scale-90">
                 {label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      )}
-    </header>
+              </span>
+            </a>
+          );
+        })}
+      </nav>
+    </>
   );
 }

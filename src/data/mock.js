@@ -7,7 +7,7 @@ export const portfolio = {
     languages: ['français', 'anglais (intermédiaire)'],
     tagline: 'Je construis des produits, du prototype au déploiement.',
     photo_url: '/ppprofile.jpg',
-    cv_url: '/cv henry kemeni.pdf'
+    cv_url: '/CV Henry Kemeni.pdf'
   },
   about:
     "Étudiant passionné par l'ingénierie logicielle et le développement d'applications web et mobiles modernisées. Bonne maîtrise des architectures full-stack, de la modélisation des systèmes d'information et de la gestion de projets informatiques. Souhaite approfondir ses compétences en conception d'applications complexes et intégration logicielle.",
@@ -24,6 +24,19 @@ export const portfolio = {
         "Intervention générale sur l'UI du système hullbay"
       ],
       link: 'https://github.com/Fotetsa/hullbay'
+    },
+    {
+      role: 'Développeur Web & Mobile',
+      company: 'Ngaoundéré FC',
+      location: 'Ngaoundéré',
+      period: '2026',
+      highlights: [
+        "Modélisation des différentes pages et maquettage des interfaces du site",
+        "Mise en place des modèles de données et de l'architecture de la base de données",
+        "Réalisation des interfaces du site Web et de l'application mobile d'administration",
+        "Achat du domaine, configuration DNS et déploiement en production sur ngaounderefc.cm"
+      ],
+      link: 'https://ngaounderefc.cm'
     }
   ],
   projects: [
@@ -37,6 +50,17 @@ export const portfolio = {
       status: 'Lancement public',
       link: null,
       image_url: ''
+    },
+    {
+      name: 'Ngaoundéré FC',
+      tagline: 'Site officiel et app mobile admin du club',
+      role: 'Développeur Web & Mobile',
+      description:
+        'Conception complète du site Web officiel et de l\'application mobile d\'administration pour le club Ngaoundéré FC. Modélisation de la base de données, création des interfaces et déploiement en production.',
+      stack: ['Nextjs', 'Node.js', 'React Native', 'PostgreSQL', 'stisch'],
+      status: 'En production',
+      link: 'https://ngaounderefc.cm',
+      image_url: '/nfcprojet.png'
     },
     {
       name: 'hullbay',

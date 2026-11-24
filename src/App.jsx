@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import './index.css';
 import { portfolio } from './data/mock';
 
@@ -9,30 +8,15 @@ import Experience from './composants/Experience';
 import Projects from './composants/Projects';
 import Skills from './composants/Skills';
 import Education from './composants/Education';
-import Contact from './composants/Contact';
+import Contact from './composants/contact';
 import Footer from './composants/Footer';
 
 export default function App() {
-  const [theme, setTheme] = useState('dark');
-
-  useEffect(() => {
-    const root = document.documentElement;
-    if (theme === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-  }, [theme]);
-
   return (
-    <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0a] text-neutral-800 dark:text-neutral-100 transition-colors duration-300">
-      <Navbar
-        displayName={portfolio.identity.display_name}
-        theme={theme}
-        setTheme={setTheme}
-      />
+    <div className="min-h-screen bg-white text-slate-800 antialiased selection:bg-[#F5EDE1] selection:text-[#7E5B31]">
+      <Navbar displayName={portfolio.identity.display_name} />
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-28 md:pb-16">
         <Hero identity={portfolio.identity} contact={portfolio.contact} />
         <About about={portfolio.about} />
         <Experience experiences={portfolio.experiences} />

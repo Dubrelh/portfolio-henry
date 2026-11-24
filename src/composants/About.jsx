@@ -1,78 +1,83 @@
-import { SparklesIcon, Code2Icon, Layers3Icon, RocketIcon } from 'lucide-react';
+import { Code2Icon, Layers3Icon, RocketIcon } from 'lucide-react';
 import { useReveal } from '../hooks/useReveal';
+import SectionHeader from './SectionHeader';
+
+const stats = [
+  { value: '2', unit: 'ans', label: "d'expérience" },
+  { value: '4', unit: '', label: 'projets majeurs' },
+  { value: 'BTS', unit: '', label: 'Génie Logiciel' },
+];
+
+const specialties = [
+  {
+    icon: Code2Icon,
+    title: 'Full-Stack & Mobile',
+    desc: 'React, Next.js, Node.js, React Native, Expo',
+  },
+  {
+    icon: Layers3Icon,
+    title: 'Architecture & SI',
+    desc: 'APIs robustes, bases relationnelles, modélisation',
+  },
+  {
+    icon: RocketIcon,
+    title: 'Orientation Produit',
+    desc: 'Du prototype au déploiement et monitoring',
+  },
+];
 
 export default function About({ about }) {
   const ref = useReveal();
 
-  const highlights = [
-    {
-      icon: Code2Icon,
-      title: 'Full-Stack & Mobile',
-      desc: 'Conception web (React, Next.js, Node.js) & mobile (React Native, Expo)',
-    },
-    {
-      icon: Layers3Icon,
-      title: 'Architecture & SI',
-      desc: 'Modélisation rigoureuse, APIs robustes et bases relationnelles',
-    },
-    {
-      icon: RocketIcon,
-      title: 'Orientation Produit',
-      desc: 'Du prototypage rapide jusqu’au déploiement et monitoring',
-    },
-  ];
-
   return (
-    <section id="about" className="py-20 relative">
-      <div className="section-heading">
-        <span />
-        <h2 className="section-title">À propos</h2>
-        <span />
-      </div>
+    <section id="about" className="py-16 sm:py-20">
+      <SectionHeader label="// ce que je fais" title="À propos" />
 
-      <div ref={ref} className="space-y-6">
-        {/* Soft background glow */}
-        <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-brand-500/5 blur-3xl pointer-events-none rounded-full" />
+      <div ref={ref} className="reveal">
+        <div className="card p-6 sm:p-8 md:p-10">
+          <div className="grid gap-8 md:gap-10 md:grid-cols-[1.3fr_0.7fr]">
+            {/* Gauche — texte + spécialités */}
+            <div className="flex flex-col justify-between">
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-6 sm:mb-8">
+                {about}
+              </p>
 
-        {/* Main story card - soft & sleek */}
-        <div className="relative rounded-3xl bg-white/90 dark:bg-neutral-900/40 border border-neutral-200/80 dark:border-white/5 backdrop-blur-md p-8 md:p-10 shadow-sm dark:shadow-none transition-all duration-300 hover:border-brand-500/30">
-          <div className="flex items-center gap-3 mb-6">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-400">
-              <SparklesIcon size={16} />
-            </span>
-            <span className="text-xs uppercase tracking-widest text-brand-600 dark:text-brand-400 font-semibold">
-              Profil & Philosophie
-            </span>
-          </div>
-
-          <p className="text-base sm:text-lg leading-relaxed text-neutral-700 dark:text-neutral-300 font-normal">
-            {about}
-          </p>
-        </div>
-
-        {/* 3 mini highlight cards */}
-        <div className="grid gap-4 sm:grid-cols-3">
-          {highlights.map((item, idx) => {
-            const Icon = item.icon;
-            return (
-              <div
-                key={idx}
-                className="rounded-2xl bg-white/80 dark:bg-neutral-900/30 border border-neutral-200/70 dark:border-white/5 p-5 shadow-xs dark:shadow-none hover:border-brand-500/30 hover:bg-white dark:hover:bg-neutral-900/50 transition-all duration-300 group"
-              >
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="flex items-center justify-center w-8 h-8 rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-400 group-hover:scale-110 group-hover:bg-brand-500/20 transition-all duration-300">
-                    <Icon size={16} />
-                  </span>
-                  <h4 className="text-sm font-semibold text-neutral-900 dark:text-white group-hover:text-brand-500 dark:group-hover:text-brand-300 transition-colors">
-                    {item.title}
-                  </h4>
-                </div>
-                <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed pl-1">
-                  {item.desc}
-                </p>
+              <div className="space-y-4">
+                {specialties.map(({ icon: Icon, title, desc }) => (
+                  <div
+                    key={title}
+                    className="flex items-start gap-3 p-2.5 sm:p-3 rounded-xl transition-colors hover:bg-[#FAF6F0]/60"
+                  >
+                    <span className="shrink-0 flex items-center justify-center w-8 h-8 rounded-lg bg-[#FAF6F0] text-[#7E5B31] border border-[#E8D5B7]/60 mt-0.5">
+                      <Icon size={16} />
+                    </span>
+                    <div>
+                      <p className="font-semibold text-slate-900 text-xs sm:text-sm">{title}</p>
+                      <p className="text-slate-500 text-xs mt-0.5 leading-relaxed">{desc}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
-            );
-          })}
+            </div>
+
+            {/* Droite — Stats */}
+            <div className="grid grid-cols-3 md:grid-cols-1 gap-2.5 sm:gap-4 md:justify-center">
+              {stats.map(({ value, unit, label }) => (
+                <div
+                  key={label}
+                  className="bg-[#FAF8F5] border border-[#EAE6DF] rounded-xl p-3.5 sm:p-5 text-center flex flex-col justify-center items-center transition-all duration-200 hover:bg-white hover:border-[#D6CBBF]"
+                >
+                  <p className="text-xl sm:text-2xl md:text-3xl font-extrabold text-[#C99E6B] tracking-tight flex items-baseline justify-center gap-0.5">
+                    {value}
+                    {unit && <span className="text-xs sm:text-sm font-semibold">{unit}</span>}
+                  </p>
+                  <p className="text-slate-500 text-[11px] sm:text-xs mt-1 font-medium">
+                    {label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
